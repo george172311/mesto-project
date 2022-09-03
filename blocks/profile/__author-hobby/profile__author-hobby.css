@@ -1,0 +1,15 @@
+.profile__author-hobby {
+  color: #fff;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__author-hobby {
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+  }
+}

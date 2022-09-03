@@ -1,0 +1,27 @@
+.popup__form {
+  border: none;
+  border-bottom: 1px solid #000;
+  width: 358px;
+  height: 27px;
+  box-sizing: border-box;
+  margin-bottom: 27px;
+}
+.popup__form::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+}
+.popup__form:last-child {
+  margin-bottom: 48px;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__form {
+    width: 238px;
+    margin-bottom: 30px;
+  }
+  .popup__form:last-child {
+    margin-bottom: 45px;
+  }
+}
