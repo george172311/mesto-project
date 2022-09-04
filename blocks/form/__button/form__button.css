@@ -1,5 +1,5 @@
-.popup__button {
-  width: 358px;
+.form__button {
+
   height: 50px;
   background-color: #000;
   color: #fff;
@@ -10,13 +10,14 @@
   border-radius: 2px;
   border: none;
 }
-.popup__button:hover {
+.form__button:hover {
   opacity: 0.8;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 600px) {
-  .popup__button {
-    width: 238px;
+@media screen and (max-width: 320px) {
+  .form__button {
     height: 46px;
   }
 }
+

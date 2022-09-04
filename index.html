@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
@@ -8,20 +8,22 @@
   <meta name="description" content="Интерактивная страница с фотографиями">
   <meta name="keywords" content="Место">
   <meta name="author" content="Георгий Диденко">
-  <link rel="stylesheet" href="./page/index.css">
-  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Место</title>
 </head>
 
 <body class="body">
-  <section class="popup popup_opened">
+  <div class="popup popup_opened">
     <div class="popup__container">
-      <button class="popup__close-button"></button>
+      <button type="button" class="popup__close-button"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <input type="text" placeholder="Жак-Ив Кусто" class="popup__form">
-      <input type="text" placeholder="Исследователь океана" class="popup__form">
-      <button type="submit" class="popup__button">Сохранить</button>
+      <form name="profile-info" class="form">
+        <input type="text" name="author-name" placeholder="Жак-Ив Кусто" class="form__input">
+        <input type="text" name="author-hobby" placeholder="Исследователь океана" class="form__input">
+        <button type="submit" class="form__button">Сохранить</button>
+      </form>
     </div>
-  </section>
+  </div>
   <div class="page">
     <header class="header">
       <img src="./images/logo.svg" alt="Логотип" class="header__logo">
@@ -30,52 +32,55 @@
       <section class="profile">
         <img src="./images/Avatar.png" alt="Изображение профиля" class="profile__avatar">
         <div class="profile__info">
-          <h1 class="profile__author">Жак-Ив Кусто<button class="profile__edit-button"></button></h1>
-          <h2 class="profile__author-hobby">Исследователь океана</h2>
+          <div class="profile__author">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button type="button" class="profile__edit-button"></button>
+          </div>
+          <p class="profile__author-hobby">Исследователь океана</p>
         </div>
-        <button class="profile__add-button"></button>
+        <button type="button" class="profile__add-button"></button>
       </section>
       <section class="elements-grid">
         <div class="element">
           <img src="./images/Everest.jpg" alt="Изображение Эвереста" class="element__image">
           <div class="element__place">
-            <h3 class="element__name">Эверест</h3>
-            <button class="element__like element__like_active"></button>
+            <h2 class="element__name">Эверест</h2>
+            <button type="button" class="element__like element__like_active"></button>
           </div>
         </div>
         <div class="element">
           <img src="./images/Norvegia.jpg" alt="Изображение Норвегия" class="element__image">
           <div class="element__place">
-            <h3 class="element__name">Норвегия</h3>
-            <button class="element__like"></button>
+            <h2 class="element__name">Норвегия</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="./images/Paris.jpg" alt="Изображение Эйфелева башня" class="element__image">
           <div class="element__place">
-            <h3 class="element__name">Эйфелева башня, париж</h3>
-            <button class="element__like"></button>
+            <h2 class="element__name">Эйфелева башня, париж</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="./images/Pisa.jpg" alt="Изображение Пизанская башня" class="element__image">
           <div class="element__place">
-            <h3 class="element__name">Пизанская башня, Пиза</h3>
-            <button class="element__like"></button>
+            <h2 class="element__name">Пизанская башня, Пиза</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="./images/Rio.jpg" alt="Изображение статуя Христа" class="element__image">
           <div class="element__place">
-            <h3 class="element__name">Статуя Христа, Рио-де-Жанейро</h3>
-            <button class="element__like"></button>
+            <h2 class="element__name">Статуя Христа, Рио-де-Жанейро</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </div>
         <div class="element">
           <img src="./images/Volgograd.jpg" alt="Изображение статя Родина мать" class="element__image">
           <div class="element__place">
-            <h3 class="element__name">Волгоград</h3>
-            <button class="element__like"></button>
+            <h2 class="element__name">Волгоград</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </div>
       </section>
