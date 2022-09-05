@@ -5,7 +5,11 @@
   max-width: 336px;
 }
 
-
+@media screen and (max-width: 600px) {
+  .profile__author {
+    max-width: 282px;
+  }
+}
 
 
 

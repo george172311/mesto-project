@@ -11,8 +11,8 @@
 
 @media screen and (max-width: 980px) {
   .profile__author-hobby {
-
     max-width: 282px;
+    text-align: center;
   }
 }
 
@@ -27,7 +27,5 @@
 @media screen and (max-width: 320px) {
   .profile__author-hobby {
     max-width: 282px;
-    text-align: center;
-
   }
 }
