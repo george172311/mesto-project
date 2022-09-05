@@ -5,15 +5,7 @@
   max-width: 336px;
 }
 
-@media screen and (max-width: 780px) {
-  .profile__author {
-    align-items: center;
-  }
-}
 
-@media screen and (max-width: 320px) {
-  .profile__author {
-    align-items: baseline;
-  }
-}
+
+
 
