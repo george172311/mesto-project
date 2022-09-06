@@ -24,8 +24,4 @@
   }
 }
 
-@media screen and (max-width: 320px) {
-  .profile__author-hobby {
-    max-width: 282px;
-  }
-}
+
