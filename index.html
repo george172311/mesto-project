@@ -9,7 +9,7 @@
   <meta name="keywords" content="Место">
   <meta name="author" content="Георгий Диденко">
   <link rel="stylesheet" href="./pages/index.css">
-  <script src="./script.js" defer></script>
+  <script src="./src/script.js" defer></script>
   <title>Место</title>
 </head>
 
@@ -36,6 +36,13 @@
         <button type="submit" class="form__button">Создать</button>
       </form>
     </div>
+  </div>
+  <div class="popup" id="image-popup">
+    <figure class="popup__element">
+      <button type="button" class="popup__close-button"></button>
+      <img alt="Изображение места" class="popup__image">
+      <figcaption class="popup__caption"></figcaption>
+    </figure>
   </div>
   <div class="page">
     <header class="header">
@@ -69,15 +76,6 @@
         <h2 class="element__name"></h2>
         <button type="button" class="element__like"></button>
       </div>
-    </div>
-  </template>
-  <template id="image-popup-template">
-    <div class="popup">
-      <figure class="popup__element">
-        <button type="button" class="popup__close-button"></button>
-        <img alt="Изображение места" class="popup__image">
-        <figcaption class="popup__caption"></figcaption>
-      </figure>
     </div>
   </template>
 
