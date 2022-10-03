@@ -64,65 +64,29 @@ form.addEventListener('submit', function (evt) {
   closePopup(profilePopup);
 })
 
-
 //добавление карточек из массива
 const elementsGrid = document.querySelector('.elements-grid');
 const elementTemplate = document.querySelector('#element-template').content;
 const nameInput = document.querySelector('#place-name');
 const imageInput = document.querySelector('#place-image');
 const cardForm = document.querySelector('#card-form');
-
-
-
 const cardsArr = [];
+
 for(i = 0; i < initialCards.length; i++) {
-  const card = elementTemplate.querySelector('.element').cloneNode(true);
-  const image = card.querySelector('.element__image');
-  let link = initialCards[i].link;
-  let name = initialCards[i].name;
-
-  image.setAttribute('src', link);
-  card.querySelector('.element__name').textContent = name;
-  card.querySelector('.element__like').addEventListener('click', function(evt) {
-    evt.target.classList.toggle('element__like_active');
-  })
-  card.querySelector('.element__delete').addEventListener('click', function() {
-    card.remove();
-  })
-  image.addEventListener('click', function() {
-    openPopup(imagePopup);
-    openImagePopup(link, name);
-  })
-  cardsArr[i] = card;
+  createCard(initialCards[i].link, initialCards[i].name);
+  cardsArr[i] = newCard;
 }
-
 
 for(i = 0; i < cardsArr.length; i++) {
   elementsGrid.prepend(cardsArr[i]);
 }
+
 //добавляем новые карточки
 function addCard() {
-
-  const card = elementTemplate.querySelector('.element').cloneNode(true);
-  const image = card.querySelector('.element__image');
-  let imageValue = imageInput.value;
-  let nameValue = nameInput.value;
-
-  image.setAttribute('src', imageValue);
-  card.querySelector('.element__name').textContent = nameValue;
-  card.querySelector('.element__like').addEventListener('click', function(evt) {
-    evt.target.classList.toggle('element__like_active');
-  })
-  card.querySelector('.element__delete').addEventListener('click', function() {
-    card.remove();
-  })
-  image.addEventListener('click', function() {
-    openPopup(imagePopup);
-    openImagePopup(imageValue, nameValue);
-  })
+  createCard(imageInput.value, nameInput.value);
   nameInput.value = '';
   imageInput.value = '';
-  elementsGrid.prepend(card);
+  elementsGrid.prepend(newCard);
 }
 
 cardForm.addEventListener('submit', function(evt) {
@@ -137,3 +101,24 @@ function openImagePopup(image, caption) {
   imagePopup.querySelector('.popup__caption').textContent = caption;
 }
 
+// функция создания новой карточки
+function createCard(getImage, getName) {
+  const card = elementTemplate.querySelector('.element').cloneNode(true);
+  const image = card.querySelector('.element__image');
+  const like = card.querySelector('.element__like');
+  const imageValue = getImage;
+  const nameValue = getName;
+  image.setAttribute('src', imageValue);
+  card.querySelector('.element__name').textContent = nameValue;
+  like.addEventListener('click', function() {
+    like.classList.toggle('element__like_active');
+  })
+  card.querySelector('.element__delete').addEventListener('click', function() {
+    card.remove();
+  })
+  image.addEventListener('click', function() {
+    openPopup(imagePopup);
+    openImagePopup(imageValue, nameValue);
+  })
+  newCard = card;
+}
