@@ -76,16 +76,15 @@ const cardForm = document.querySelector('#card-form');
 
 
 initialCards.forEach(function(item) {
-  let card = createCard(item.link, item.name);
+  const card = createCard(item.link, item.name);
   elementsGrid.prepend(card);
 })
 
 
 //добавляем новые карточки
 function addCard() {
-  let card = createCard(imageInput.value, nameInput.value);
-  nameInput.value = '';
-  imageInput.value = '';
+  const card = createCard(imageInput.value, nameInput.value);
+  cardForm.reset();
   elementsGrid.prepend(card);
 }
 
