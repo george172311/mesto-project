@@ -36,7 +36,7 @@ const btnCloseAddCardPopup = document.querySelector('#place-close');
 const imagePopup = document.querySelector('#image-popup');
 const popupCardImage = imagePopup.querySelector('.popup__image');
 const popupCardCaption = imagePopup.querySelector('.popup__caption');
-
+const body = document.querySelector('body');
 
 // Открытие/закрытие попапа
 function openPopup(element) {
@@ -47,11 +47,32 @@ function closePopup(element) {
   element.classList.remove('popup_opened');
 }
 
+function closePopupOverlay(evt) {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(profilePopup);
+    closePopup(placePopup);
+    closePopup(imagePopup);
+  }
+}
+
+function closePopupEscape(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(profilePopup);
+    closePopup(placePopup);
+    closePopup(imagePopup);
+  }
+}
+
 btnOpenEditProfilePopup.addEventListener('click', () => openPopup(profilePopup));
 btnCloseEditProfilePopup.addEventListener('click', () => closePopup(profilePopup));
 btnOpenAddCardPopup.addEventListener('click', () => openPopup(placePopup));
 btnCloseAddCardPopup.addEventListener('click', () => closePopup(placePopup));
 imagePopup.querySelector('.popup__close-button').addEventListener('click', () => closePopup(imagePopup));
+profilePopup.addEventListener('click', closePopupOverlay);
+placePopup.addEventListener('click', closePopupOverlay);
+imagePopup.addEventListener('click', closePopupOverlay);
+body.addEventListener('keydown', closePopupEscape);
+
 
 //отправка формы информации об авторе
 const formEditProfile = document.querySelector('#profile-form');
@@ -60,12 +81,15 @@ const artistHobby = document.querySelector('#hobby');
 const authorName = document.querySelector('.profile__name');
 const hobby = document.querySelector('.profile__author-hobby');
 
-formEditProfile.addEventListener('submit', function (evt) {
+function subProfInfo(evt) {
   evt.preventDefault();
   authorName.textContent = artistName.value;
   hobby.textContent = artistHobby.value;
   closePopup(profilePopup);
-})
+}
+
+formEditProfile.addEventListener('submit', subProfInfo);
+
 
 //добавление карточек из массива
 const elementsGrid = document.querySelector('.elements-grid');
@@ -75,7 +99,7 @@ const imageInput = document.querySelector('#place-image');
 const cardForm = document.querySelector('#card-form');
 
 
-initialCards.forEach(function(item) {
+initialCards.forEach(function (item) {
   const card = createCard(item.link, item.name);
   elementsGrid.prepend(card);
 })
@@ -88,7 +112,7 @@ function addCard() {
   elementsGrid.prepend(card);
 }
 
-cardForm.addEventListener('submit', function(evt) {
+cardForm.addEventListener('submit', function (evt) {
   evt.preventDefault();
   addCard();
   closePopup(placePopup);
@@ -110,14 +134,113 @@ function createCard(image, name) {
   cardImage.setAttribute('src', image);
   cardImage.setAttribute('alt', 'Изображение ' + name);
   card.querySelector('.element__name').textContent = name;
-  like.addEventListener('click', function() {
+  like.addEventListener('click', function () {
     like.classList.toggle('element__like_active');
   })
-  card.querySelector('.element__delete').addEventListener('click', function() {
+  card.querySelector('.element__delete').addEventListener('click', function () {
     card.remove();
   })
-  cardImage.addEventListener('click', function() {
+  cardImage.addEventListener('click', function () {
     openImagePopup(image, name);
   })
   return card;
 }
+
+
+// Валидация формы автора
+
+formEditProfile.addEventListener('input', evt => {
+  const key = evt.target.name;
+  const value = evt.target.value;
+  const formData = new FormData(evt.currentTarget);
+  const arrData = Object.fromEntries(formData);
+  const error = validate(key, value);
+console.log(formEditProfile.checkValidity())
+
+  if(!error) {
+    return clearError(key);
+  }
+if(error) {
+  return setError(key, error);
+}
+
+
+});
+
+function validate(key, value) {
+  const validator = validators[key];
+  return validator(value);
+};
+
+const validators = {
+  authorname: validateAuthorName,
+  authorhobby: validateAuthorHobby,
+  placename: validatePlaceName,
+  placeimage: validatePlaceImage
+};
+
+function validateAuthorName(value) {
+  if(!value) {
+    return 'поле обязательно для заполнения';
+  }
+  if(value.length < 2) {
+    return 'в поле «Имя» должно быть от 2 до 40 символов';
+  }
+  if(value.length > 40) {
+    return 'в поле «Имя» должно быть от 2 до 40 символов';
+  }
+  return null;
+};
+
+function validateAuthorHobby(value) {
+  if(!value) {
+    return 'поле обязательно для заполнения';
+  }
+  if(value.length < 2) {
+    return 'в поле «О себе» должно быть от 2 до 200 символов';
+  }
+  if(value.length > 200) {
+    return 'в поле «О себе» должно быть от 2 до 200 символов';
+  }
+  return null;
+};
+
+
+function validatePlaceName(value) {
+  if(!value) {
+    return false;
+  }
+  if(value.length < 5) {
+    return false;
+  }
+  return true;
+};
+
+
+function validatePlaceImage(value) {
+
+};
+
+function setError(key, errorMessage) {
+  const input = formEditProfile.querySelector(`.form__input[name=${key}]`);
+  const error = input.nextElementSibling;
+  const button = formEditProfile.querySelector('.form__button');
+
+  input.classList.add('form__input_invalid');
+  error.textContent = errorMessage;
+  error.classList.add('form__error_visible');
+  button.setAttribute('disabled', true);
+
+};
+
+function clearError(key) {
+  const input = formEditProfile.querySelector(`.form__input[name=${key}]`);
+  const error = input.nextElementSibling;
+  const button = formEditProfile.querySelector('.form__button');
+
+  input.classList.remove('form__input_invalid');
+  error.textContent = '';
+  error.classList.remove('form__error_visible');
+  button.removeAttribute('disabled');
+};
+
