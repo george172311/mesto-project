@@ -147,25 +147,49 @@ function createCard(image, name) {
 }
 
 
-// Валидация формы автора
+// Валидация форм
 
 formEditProfile.addEventListener('input', evt => {
+  checkValidation(evt, formEditProfile);
+});
+cardForm.addEventListener('input', evt => {
+  checkValidation(evt, cardForm);
+});
+
+function checkValidation(evt, form) {
   const key = evt.target.name;
   const value = evt.target.value;
   const formData = new FormData(evt.currentTarget);
   const arrData = Object.fromEntries(formData);
   const error = validate(key, value);
-console.log(formEditProfile.checkValidity())
+  // console.log(form.checkValidity());
+  // console.log(evt.target.validationMessage);
+  console.log(evt.target)
+  console.log(evt.currentTarget)
 
-  if(!error) {
-    return clearError(key);
+  if (!error) {
+    return clearError(key, form);
   }
-if(error) {
-  return setError(key, error);
+  if (error) {
+    return setError(key, error, form);
+  }
+
+  // function isValid(form) {
+  //  const inputs = form.querySelectorAll('.form__input');
+  //  let isFormValid = true;
+  //  for(input of inputs) {
+
+  //  }
+
+  // }
+
+  // if (isValid) {
+  //   return clearError(key, form);
+  // }
+  // if (!isValid) {
+  //   return setError(key, error, form);
+  // }
 }
-
-
-});
 
 function validate(key, value) {
   const validator = validators[key];
@@ -180,51 +204,55 @@ const validators = {
 };
 
 function validateAuthorName(value) {
-  if(!value) {
+  if (!value) {
     return 'поле обязательно для заполнения';
   }
-  if(value.length < 2) {
+  if (value.length < 2) {
     return 'в поле «Имя» должно быть от 2 до 40 символов';
   }
-  if(value.length > 40) {
+  if (value.length > 40) {
     return 'в поле «Имя» должно быть от 2 до 40 символов';
   }
   return null;
 };
 
 function validateAuthorHobby(value) {
-  if(!value) {
+  if (!value) {
     return 'поле обязательно для заполнения';
   }
-  if(value.length < 2) {
+  if (value.length < 2) {
     return 'в поле «О себе» должно быть от 2 до 200 символов';
   }
-  if(value.length > 200) {
+  if (value.length > 200) {
     return 'в поле «О себе» должно быть от 2 до 200 символов';
   }
   return null;
 };
 
-
 function validatePlaceName(value) {
-  if(!value) {
-    return false;
+  if (!value) {
+    return 'поле обязательно для заполнения';
   }
-  if(value.length < 5) {
-    return false;
+  if (value.length < 2) {
+    return 'в поле «Место» должно быть от 2 до 30 символов';
   }
-  return true;
+  if (value.length > 30) {
+    return 'в поле «Место» должно быть от 2 до 30 символов';
+  }
+  return null;
 };
-
 
 function validatePlaceImage(value) {
-
+  if (!value) {
+    return 'поле обязательно для заполнения';
+  }
+  return null;
 };
 
-function setError(key, errorMessage) {
-  const input = formEditProfile.querySelector(`.form__input[name=${key}]`);
+function setError(key, errorMessage, form) {
+  const input = form.querySelector(`.form__input[name=${key}]`);
   const error = input.nextElementSibling;
-  const button = formEditProfile.querySelector('.form__button');
+  const button = form.querySelector('.form__button');
 
   input.classList.add('form__input_invalid');
   error.textContent = errorMessage;
@@ -233,10 +261,10 @@ function setError(key, errorMessage) {
 
 };
 
-function clearError(key) {
-  const input = formEditProfile.querySelector(`.form__input[name=${key}]`);
+function clearError(key, form) {
+  const input = form.querySelector(`.form__input[name=${key}]`);
   const error = input.nextElementSibling;
-  const button = formEditProfile.querySelector('.form__button');
+  const button = form.querySelector('.form__button');
 
   input.classList.remove('form__input_invalid');
   error.textContent = '';
