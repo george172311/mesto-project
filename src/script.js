@@ -63,9 +63,15 @@ function closePopupEscape(evt) {
   }
 }
 
-btnOpenEditProfilePopup.addEventListener('click', () => openPopup(profilePopup));
+btnOpenEditProfilePopup.addEventListener('click', () => {
+  openPopup(profilePopup);
+  disableButton(formEditProfile);
+});
 btnCloseEditProfilePopup.addEventListener('click', () => closePopup(profilePopup));
-btnOpenAddCardPopup.addEventListener('click', () => openPopup(placePopup));
+btnOpenAddCardPopup.addEventListener('click', () => {
+  openPopup(placePopup);
+  disableButton(cardForm);
+});
 btnCloseAddCardPopup.addEventListener('click', () => closePopup(placePopup));
 imagePopup.querySelector('.popup__close-button').addEventListener('click', () => closePopup(imagePopup));
 profilePopup.addEventListener('click', closePopupOverlay);
@@ -151,21 +157,39 @@ function createCard(image, name) {
 
 formEditProfile.addEventListener('input', evt => {
   checkValidation(evt, formEditProfile);
+  disableButton(formEditProfile);
 });
 cardForm.addEventListener('input', evt => {
   checkValidation(evt, cardForm);
+  disableButton(cardForm);
 });
+
+function disableButton(form) {
+  const button = form.querySelector('.form__button')
+  const inputs = form.querySelectorAll('.form__input');
+  const inputList = Array.from(inputs);
+
+  function hasInvalidInput(inputList) {
+    return inputList.some((inputElement) => {
+      return inputElement.classList.contains('form__input_invalid');
+    });
+  };
+
+  console.log(hasInvalidInput(inputList));
+  if (hasInvalidInput(inputList)) {
+    button.setAttribute('disabled', true);
+  }
+  if (!hasInvalidInput(inputList)) {
+    button.removeAttribute('disabled');
+  }
+};
 
 function checkValidation(evt, form) {
   const key = evt.target.name;
   const value = evt.target.value;
-  const formData = new FormData(evt.currentTarget);
-  const arrData = Object.fromEntries(formData);
-  const error = validate(key, value);
-  // console.log(form.checkValidity());
-  // console.log(evt.target.validationMessage);
-  console.log(evt.target)
-  console.log(evt.currentTarget)
+  // const formData = new FormData(evt.currentTarget);
+  // const arrData = Object.fromEntries(formData);
+  const error = validate(key, value, evt);
 
   if (!error) {
     return clearError(key, form);
@@ -173,27 +197,11 @@ function checkValidation(evt, form) {
   if (error) {
     return setError(key, error, form);
   }
-
-  // function isValid(form) {
-  //  const inputs = form.querySelectorAll('.form__input');
-  //  let isFormValid = true;
-  //  for(input of inputs) {
-
-  //  }
-
-  // }
-
-  // if (isValid) {
-  //   return clearError(key, form);
-  // }
-  // if (!isValid) {
-  //   return setError(key, error, form);
-  // }
 }
 
-function validate(key, value) {
+function validate(key, value, evt) {
   const validator = validators[key];
-  return validator(value);
+  return validator(value, evt);
 };
 
 const validators = {
@@ -203,9 +211,9 @@ const validators = {
   placeimage: validatePlaceImage
 };
 
-function validateAuthorName(value) {
+function validateAuthorName(value, evt) {
   if (!value) {
-    return 'поле обязательно для заполнения';
+    return evt.target.validationMessage;
   }
   if (value.length < 2) {
     return 'в поле «Имя» должно быть от 2 до 40 символов';
@@ -216,9 +224,9 @@ function validateAuthorName(value) {
   return null;
 };
 
-function validateAuthorHobby(value) {
+function validateAuthorHobby(value, evt) {
   if (!value) {
-    return 'поле обязательно для заполнения';
+    return evt.target.validationMessage;
   }
   if (value.length < 2) {
     return 'в поле «О себе» должно быть от 2 до 200 символов';
@@ -229,9 +237,9 @@ function validateAuthorHobby(value) {
   return null;
 };
 
-function validatePlaceName(value) {
+function validatePlaceName(value, evt) {
   if (!value) {
-    return 'поле обязательно для заполнения';
+    return evt.target.validationMessage;
   }
   if (value.length < 2) {
     return 'в поле «Место» должно быть от 2 до 30 символов';
@@ -242,9 +250,12 @@ function validatePlaceName(value) {
   return null;
 };
 
-function validatePlaceImage(value) {
+function validatePlaceImage(value, evt) {
   if (!value) {
-    return 'поле обязательно для заполнения';
+    return evt.target.validationMessage;
+  }
+  if (evt.target.checkValidity) {
+    return evt.target.validationMessage;
   }
   return null;
 };
@@ -252,23 +263,18 @@ function validatePlaceImage(value) {
 function setError(key, errorMessage, form) {
   const input = form.querySelector(`.form__input[name=${key}]`);
   const error = input.nextElementSibling;
-  const button = form.querySelector('.form__button');
 
   input.classList.add('form__input_invalid');
   error.textContent = errorMessage;
   error.classList.add('form__error_visible');
-  button.setAttribute('disabled', true);
-
 };
 
 function clearError(key, form) {
   const input = form.querySelector(`.form__input[name=${key}]`);
   const error = input.nextElementSibling;
-  const button = form.querySelector('.form__button');
 
   input.classList.remove('form__input_invalid');
   error.textContent = '';
   error.classList.remove('form__error_visible');
-  button.removeAttribute('disabled');
 };
 
