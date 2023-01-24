@@ -9,7 +9,11 @@
   <meta name="keywords" content="Место">
   <meta name="author" content="Георгий Диденко">
   <link rel="stylesheet" href="./pages/index.css">
-  <script src="./src/script.js" defer></script>
+  <!-- <script src="./src/script.js" defer></script> -->
+  <script type="module" src="./src/components/card.js"></script>
+  <script type="module" src="./src/components/index.js"></script>
+  <script type="module" src="./src/components/modal.js"></script>
+  <script type="module" src="./src/components/validate.js"></script>
   <title>Место</title>
 </head>
 
@@ -37,7 +41,7 @@
         <p class="form__error"></p>
         <input type="url" required name="placeimage" placeholder="Ссылка на картинку" class="form__input" id="place-image">
         <p class="form__error"></p>
-        <button type="submit" class="form__button">Создать</button>
+        <button type="submit" disabled class="form__button">Создать</button>
       </form>
     </div>
   </div>

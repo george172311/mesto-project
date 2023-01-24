@@ -63,15 +63,9 @@ function closePopupEscape(evt) {
   }
 }
 
-btnOpenEditProfilePopup.addEventListener('click', () => {
-  openPopup(profilePopup);
-  disableButton(formEditProfile);
-});
+btnOpenEditProfilePopup.addEventListener('click', () => openPopup(profilePopup));
 btnCloseEditProfilePopup.addEventListener('click', () => closePopup(profilePopup));
-btnOpenAddCardPopup.addEventListener('click', () => {
-  openPopup(placePopup);
-  disableButton(cardForm);
-});
+btnOpenAddCardPopup.addEventListener('click', () => openPopup(placePopup));
 btnCloseAddCardPopup.addEventListener('click', () => closePopup(placePopup));
 imagePopup.querySelector('.popup__close-button').addEventListener('click', () => closePopup(imagePopup));
 profilePopup.addEventListener('click', closePopupOverlay);
@@ -92,7 +86,7 @@ function subProfInfo(evt) {
   authorName.textContent = artistName.value;
   hobby.textContent = artistHobby.value;
   closePopup(profilePopup);
-}
+};
 
 formEditProfile.addEventListener('submit', subProfInfo);
 
@@ -108,7 +102,7 @@ const cardForm = document.querySelector('#card-form');
 initialCards.forEach(function (item) {
   const card = createCard(item.link, item.name);
   elementsGrid.prepend(card);
-})
+});
 
 
 //добавляем новые карточки
@@ -116,13 +110,13 @@ function addCard() {
   const card = createCard(imageInput.value, nameInput.value);
   cardForm.reset();
   elementsGrid.prepend(card);
-}
+};
 
 cardForm.addEventListener('submit', function (evt) {
   evt.preventDefault();
   addCard();
   closePopup(placePopup);
-})
+});
 
 // функция открытия окна с картинкой
 function openImagePopup(src, caption) {
