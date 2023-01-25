@@ -1,7 +1,8 @@
 /*-----------------------ОБРАБОТЧИКИ СОБЫТИЙ-----------------------*/
-import {profilePopup, btnOpenEditProfilePopup, btnCloseEditProfilePopup, placePopup, btnOpenAddCardPopup, btnCloseAddCardPopup, imagePopup, body, formEditProfile,  openPopup, closePopup, closePopupOverlay, closePopupEscape, subProfInfo} from './modal.js'
-import {cardForm, addCard} from './card.js'
-import {checkValidation, disableButton} from './validate.js'
+import '../pages/index.css';
+import { profilePopup, btnOpenEditProfilePopup, btnCloseEditProfilePopup, placePopup, btnOpenAddCardPopup, btnCloseAddCardPopup, imagePopup, body, formEditProfile, openPopup, closePopup, closePopupOverlay, closePopupEscape, subProfInfo } from './modal.js';
+import { cardForm, addCard } from './card.js';
+import { checkValidation, disableButton } from './validate.js';
 // открытие/закрытие окон
 
 btnOpenEditProfilePopup.addEventListener('click', () => openPopup(profilePopup));
