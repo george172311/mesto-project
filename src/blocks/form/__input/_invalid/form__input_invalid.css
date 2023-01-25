@@ -1,0 +1,7 @@
+.form__input_invalid {
+  margin-bottom: 0;
+  border-color: #FF0000;
+}
+.form__input_invalid:last-of-type {
+  margin-bottom: 0;
+}
