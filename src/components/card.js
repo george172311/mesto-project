@@ -45,7 +45,9 @@ initialCards.forEach(function (item) {
 //добавляем новые карточки
 function addCard() {
   const card = createCard(imageInput.value, nameInput.value);
+  const button = cardForm.querySelector('.form__button');
   cardForm.reset();
+  button.setAttribute('disabled', true);
   elementsGrid.prepend(card);
 };
 

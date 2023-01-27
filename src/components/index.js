@@ -1,8 +1,8 @@
 /*-----------------------ОБРАБОТЧИКИ СОБЫТИЙ-----------------------*/
 import '../pages/index.css';
-import { profilePopup, btnOpenEditProfilePopup, btnCloseEditProfilePopup, placePopup, btnOpenAddCardPopup, btnCloseAddCardPopup, imagePopup, body, formEditProfile, openPopup, closePopup, closePopupOverlay, closePopupEscape, subProfInfo } from './modal.js';
+import { profilePopup, btnOpenEditProfilePopup, btnCloseEditProfilePopup, placePopup, btnOpenAddCardPopup, btnCloseAddCardPopup, imagePopup, body, formEditProfile, openPopup, closePopup, closePopupOverlay, closePopupEscape, handleProfileFormSubmit } from './modal.js';
 import { cardForm, addCard } from './card.js';
-import { checkValidation, disableButton } from './validate.js';
+import { enableValidation } from './validate.js';
 // открытие/закрытие окон
 
 btnOpenEditProfilePopup.addEventListener('click', () => openPopup(profilePopup));
@@ -17,7 +17,7 @@ body.addEventListener('keydown', closePopupEscape);
 
 // Submits
 
-formEditProfile.addEventListener('submit', subProfInfo);
+formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 cardForm.addEventListener('submit', function (evt) {
   evt.preventDefault();
   addCard();
@@ -25,12 +25,12 @@ cardForm.addEventListener('submit', function (evt) {
 });
 
 // Валидация
-
-formEditProfile.addEventListener('input', evt => {
-  checkValidation(evt, formEditProfile);
-  disableButton(formEditProfile);
-});
-cardForm.addEventListener('input', evt => {
-  checkValidation(evt, cardForm);
-  disableButton(cardForm);
-});
+enableValidation();
+// formEditProfile.addEventListener('input', evt => {
+//   checkValidation(evt, formEditProfile);
+//   disableButton(formEditProfile);
+// });
+// cardForm.addEventListener('input', evt => {
+//   checkValidation(evt, cardForm);
+//   disableButton(cardForm);
+// });

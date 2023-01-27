@@ -13,25 +13,25 @@ const body = document.querySelector('body');
 // Открытие/закрытие попапа
 function openPopup(element) {
   element.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupEscape);
 };
 
 function closePopup(element) {
   element.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEscape);
 };
 
 function closePopupOverlay(evt) {
   if (evt.target.classList.contains('popup')) {
-    closePopup(profilePopup);
-    closePopup(placePopup);
-    closePopup(imagePopup);
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   };
 };
 
 function closePopupEscape(evt) {
   if (evt.key === 'Escape') {
-    closePopup(profilePopup);
-    closePopup(placePopup);
-    closePopup(imagePopup);
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   };
 };
 
@@ -50,11 +50,11 @@ const artistHobby = document.querySelector('#hobby');
 const authorName = document.querySelector('.profile__name');
 const hobby = document.querySelector('.profile__author-hobby');
 
-function subProfInfo(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   authorName.textContent = artistName.value;
   hobby.textContent = artistHobby.value;
   closePopup(profilePopup);
 };
 
-export { profilePopup, btnOpenEditProfilePopup, btnCloseEditProfilePopup, placePopup, btnOpenAddCardPopup, btnCloseAddCardPopup, imagePopup, body, formEditProfile, openPopup, closePopup, closePopupOverlay, closePopupEscape, subProfInfo, openImagePopup }
+export { profilePopup, btnOpenEditProfilePopup, btnCloseEditProfilePopup, placePopup, btnOpenAddCardPopup, btnCloseAddCardPopup, imagePopup, body, formEditProfile, openPopup, closePopup, closePopupOverlay, closePopupEscape, handleProfileFormSubmit, openImagePopup }

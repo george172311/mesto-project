@@ -2,6 +2,6 @@
 
 Учебный проект интерактивной страницы "Mesto", адаптивная верстка по макету из Figma
 
-Использовались HTML, CSS (flex, grid, media-запросы), JavaScript
+Использовались HTML, CSS (flex, grid, media-запросы), JavaScript, WebPack
 
 Ссылка на проект на github pages: "https://george172311.github.io/mesto-project/"
