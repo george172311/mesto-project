@@ -6,14 +6,21 @@ import { enableValidation } from './validate.js';
 // открытие/закрытие окон
 
 btnOpenEditProfilePopup.addEventListener('click', () => openPopup(profilePopup));
-btnCloseEditProfilePopup.addEventListener('click', () => closePopup(profilePopup));
 btnOpenAddCardPopup.addEventListener('click', () => openPopup(placePopup));
-btnCloseAddCardPopup.addEventListener('click', () => closePopup(placePopup));
-imagePopup.querySelector('.popup__close-button').addEventListener('click', () => closePopup(imagePopup));
-profilePopup.addEventListener('click', closePopupOverlay);
-placePopup.addEventListener('click', closePopupOverlay);
-imagePopup.addEventListener('click', closePopupOverlay);
-body.addEventListener('keydown', closePopupEscape);
+
+const popups = document.querySelectorAll('.popup');
+
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup)
+        };
+        if (evt.target.classList.contains('popup__close-button')) {
+          closePopup(popup)
+        };
+    });
+});
+
 
 // Submits
 
