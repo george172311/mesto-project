@@ -1,6 +1,6 @@
 /*-----------------------ОБРАБОТЧИКИ СОБЫТИЙ-----------------------*/
 import '../pages/index.css';
-import { profilePopup, btnOpenEditProfilePopup, btnCloseEditProfilePopup, placePopup, btnOpenAddCardPopup, btnCloseAddCardPopup, imagePopup, body, formEditProfile, openPopup, closePopup, closePopupOverlay, closePopupEscape, handleProfileFormSubmit } from './modal.js';
+import {  profilePopup, btnOpenEditProfilePopup, placePopup, btnOpenAddCardPopup, imagePopup, formEditProfile, openPopup, closePopup, handleProfileFormSubmit } from './modal.js';
 import { cardForm, addCard } from './card.js';
 import { enableValidation } from './validate.js';
 // открытие/закрытие окон
@@ -32,12 +32,13 @@ cardForm.addEventListener('submit', function (evt) {
 });
 
 // Валидация
-enableValidation();
-// formEditProfile.addEventListener('input', evt => {
-//   checkValidation(evt, formEditProfile);
-//   disableButton(formEditProfile);
-// });
-// cardForm.addEventListener('input', evt => {
-//   checkValidation(evt, cardForm);
-//   disableButton(cardForm);
-// });
+// enableValidation();
+enableValidation({
+  invalidInput: 'form__input_invalid',
+  visibleError: 'form__error_visible',
+  input: 'form__input',
+  button: 'form__button',
+  form: 'form',
+});
+
+

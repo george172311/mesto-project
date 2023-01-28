@@ -1,14 +1,12 @@
 //переменные для попапа
 const profilePopup = document.querySelector('#profile-popup');
 const btnOpenEditProfilePopup = document.querySelector('.profile__edit-button');
-const btnCloseEditProfilePopup = document.querySelector('#profile-close');
 const placePopup = document.querySelector('#cards-popup');
 const btnOpenAddCardPopup = document.querySelector('.profile__add-button');
-const btnCloseAddCardPopup = document.querySelector('#place-close');
 const imagePopup = document.querySelector('#image-popup');
 const popupCardImage = imagePopup.querySelector('.popup__image');
 const popupCardCaption = imagePopup.querySelector('.popup__caption');
-const body = document.querySelector('body');
+
 
 // Открытие/закрытие попапа
 function openPopup(element) {
@@ -21,12 +19,7 @@ function closePopup(element) {
   document.removeEventListener('keydown', closePopupEscape);
 };
 
-function closePopupOverlay(evt) {
-  if (evt.target.classList.contains('popup')) {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  };
-};
+
 
 function closePopupEscape(evt) {
   if (evt.key === 'Escape') {
@@ -57,4 +50,4 @@ function handleProfileFormSubmit(evt) {
   closePopup(profilePopup);
 };
 
-export { profilePopup, btnOpenEditProfilePopup, btnCloseEditProfilePopup, placePopup, btnOpenAddCardPopup, btnCloseAddCardPopup, imagePopup, body, formEditProfile, openPopup, closePopup, closePopupOverlay, closePopupEscape, handleProfileFormSubmit, openImagePopup }
+export { profilePopup, btnOpenEditProfilePopup, placePopup, btnOpenAddCardPopup, imagePopup, formEditProfile, openPopup, closePopup, handleProfileFormSubmit, openImagePopup }
