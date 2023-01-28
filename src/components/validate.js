@@ -14,12 +14,18 @@ const hideInputError = (formElement, inputElement, settings) => {
 };
 
 const checkInputValidity = (formElement, inputElement, settings) => {
+
+  if(inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.error);
+  } else {
+    inputElement.setCustomValidity('');
+  };
+
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, settings);
-
   } else {
     hideInputError(formElement, inputElement, settings);
-  }
+  };
 };
 
 const setEventListeners = (formElement, settings) => {
@@ -34,15 +40,13 @@ const setEventListeners = (formElement, settings) => {
   });
 };
 
-function enableValidation (settings)  {
+function enableValidation(settings) {
   const formList = Array.from(document.querySelectorAll(`.${settings.form}`));
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-      setEventListeners(formElement, settings);
-
-
+    setEventListeners(formElement, settings);
   });
 };
 
