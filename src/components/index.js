@@ -3,7 +3,9 @@ import '../pages/index.css';
 import { profilePopup, btnOpenEditProfilePopup, placePopup, btnOpenAddCardPopup, imagePopup, formEditProfile, openPopup, closePopup, handleProfileFormSubmit } from './modal.js';
 import { cardForm, addCard } from './card.js';
 import { enableValidation } from './validate.js';
-
+import { authorName, hobby } from './modal.js'
+import { createCard, elementsGrid } from './card.js'
+import { getInitialCards, getInitialName, deleteCard } from './api.js'
 // открытие/закрытие окон
 
 btnOpenEditProfilePopup.addEventListener('click', () => openPopup(profilePopup));
@@ -41,5 +43,27 @@ enableValidation({
   button: 'form__button',
   form: 'form',
 });
+
+
+let userId
+
+
+Promise.all([getInitialCards(), getInitialName()])
+  .then(([cards, user]) => {
+    userId = user._id;
+    authorName.textContent = user.name;
+    hobby.textContent = user.about;
+    cards.forEach((card) => {
+      const newCard = createCard(card.link, card.name);
+      elementsGrid.prepend(newCard);
+
+      if(card.owner._id === userId) {
+        newCard.querySelector('.element__delete').addEventListener('click', function () {
+          deleteCard(card);
+          newCard.remove()
+        })
+      }
+    })
+  })
 
 

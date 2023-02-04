@@ -1,3 +1,6 @@
+import { addProfileInfoToServ } from "./api.js";
+
+
 //переменные для попапа
 const profilePopup = document.querySelector('#profile-popup');
 const btnOpenEditProfilePopup = document.querySelector('.profile__edit-button');
@@ -47,7 +50,8 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   authorName.textContent = artistName.value;
   hobby.textContent = artistHobby.value;
+  addProfileInfoToServ(artistName.value, artistHobby.value)
   closePopup(profilePopup);
 };
 
-export { profilePopup, btnOpenEditProfilePopup, placePopup, btnOpenAddCardPopup, imagePopup, formEditProfile, openPopup, closePopup, handleProfileFormSubmit, openImagePopup }
+export { authorName, hobby, profilePopup, btnOpenEditProfilePopup, placePopup, btnOpenAddCardPopup, imagePopup, formEditProfile, openPopup, closePopup, handleProfileFormSubmit, openImagePopup }
