@@ -51,15 +51,27 @@ const hobby = document.querySelector('.profile__author-hobby');
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  authorName.textContent = artistName.value;
-  hobby.textContent = artistHobby.value;
+  showOnLoad(evt, true);
   addProfileInfoToServ(artistName.value, artistHobby.value)
-  closePopup(profilePopup);
+    .then((data) => {
+      authorName.textContent = data.name;
+      hobby.textContent = data.about;
+    })
+    .then(() => {
+      closePopup(profilePopup)
+    })
+    .catch(err => console.log(err))
+    .finally(() => showOnLoad(evt, false))
 };
 
-export function changeAvatar(avatar) {
-profileAvatar.src = avatar.value;
-addAvatarToServ(avatar);
+
+
+export function showOnLoad(evt, isLoad) {
+  if(isLoad) {
+    evt.submitter.textContent = 'Сохранение...';
+  } else {
+    evt.submitter.textContent = 'Сохранить';
+  }
 }
 
-export { authorName, hobby, profilePopup, btnOpenEditProfilePopup, placePopup, btnOpenAddCardPopup, imagePopup, formEditProfile, profileAvatar, avatarPopup, avatarInput, openPopup, closePopup, handleProfileFormSubmit, openImagePopup }
+export { authorName, hobby, profilePopup, btnOpenEditProfilePopup, placePopup, btnOpenAddCardPopup, imagePopup, formEditProfile, profileAvatar, avatarPopup, avatarInput, artistName, artistHobby, openPopup, closePopup, handleProfileFormSubmit, openImagePopup }

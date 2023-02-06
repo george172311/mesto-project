@@ -39,7 +39,7 @@ export function addCardToServ(image, name) {
 
 // Обновляем информацию об авторе
 export function addProfileInfoToServ(name, about) {
-  fetch(`${config.baseUrl}/users/me`, {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({
@@ -47,6 +47,7 @@ export function addProfileInfoToServ(name, about) {
       about: about
     })
   })
+    .then(res => checkRes(res))
     .catch(err => console.log(err))
 }
 
@@ -74,13 +75,14 @@ export function deleteCard(card) {
 
 // Обновляем аватар
 export function addAvatarToServ(avatar) {
-  fetch(`${config.baseUrl}/users/me/avatar`, {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({
       avatar: avatar.value
     })
   })
+    .then(res => checkRes(res))
     .catch(err => console.log(err))
 }
 
