@@ -1,32 +1,9 @@
 import { openImagePopup } from "./modal.js";
+import { addCardToServ, deleteCard, putLike, deleteLike } from "./api.js";
+import { userId } from "./index.js";
 
-//массив карточек
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+
+
 
 //добавление карточек из массива
 const elementsGrid = document.querySelector('.elements-grid');
@@ -36,41 +13,61 @@ const imageInput = document.querySelector('#place-image');
 const cardForm = document.querySelector('#card-form');
 
 
-initialCards.forEach(function (item) {
-  const card = createCard(item.link, item.name);
-  elementsGrid.prepend(card);
-});
-
-
 //добавляем новые карточки
 function addCard() {
   const card = createCard(imageInput.value, nameInput.value);
+  addCardToServ(imageInput.value, nameInput.value);
   const button = cardForm.querySelector('.form__button');
   cardForm.reset();
   button.setAttribute('disabled', true);
   elementsGrid.prepend(card);
+
 };
 
 // функция создания новой карточки
-function createCard(image, name) {
-  const card = elementTemplate.querySelector('.element').cloneNode(true);
-  const cardImage = card.querySelector('.element__image');
-  const like = card.querySelector('.element__like');
-  cardImage.setAttribute('src', image);
-  cardImage.setAttribute('alt', 'Изображение ' + name);
-  card.querySelector('.element__name').textContent = name;
+function createCard(card) {
+  const newCard = elementTemplate.querySelector('.element').cloneNode(true);
+  const cardImage = newCard.querySelector('.element__image');
+  const like = newCard.querySelector('.element__like');
+  const likeCount = newCard.querySelector('.element__like-count');
+  likeCount.textContent = card.likes.length;
+  cardImage.setAttribute('src', card.link);
+  cardImage.setAttribute('alt', 'Изображение ' + card.name);
+  newCard.querySelector('.element__name').textContent = card.name;
+  if (card.owner._id === userId) {
+    newCard.querySelector('.element__delete').classList.add('element__delete_visible');
+    newCard.querySelector('.element__delete').addEventListener('click', function () {
+      deleteCard(card);
+      newCard.remove()
+    })
+  }
+  let likeAuthor = card.likes.find(item => item._id === userId);
+  if (likeAuthor) {
+    like.classList.add('element__like_active');
+  }
   like.addEventListener('click', function () {
-    like.classList.toggle('element__like_active');
-  })
-  card.querySelector('.element__delete').addEventListener('click', function () {
-    card.remove();
+    if (!likeAuthor) {
+      putLike(card._id)
+        .then((data) => {
+          likeCount.textContent = data.likes.length
+        })
+      likeAuthor = true;
+      like.classList.add('element__like_active');
+    } else {
+      deleteLike(card._id)
+        .then((data) => {
+          likeCount.textContent = data.likes.length
+        })
+      likeAuthor = false;
+      like.classList.remove('element__like_active');
+    }
   })
   cardImage.addEventListener('click', function () {
-    openImagePopup(image, name);
+    openImagePopup(card.link, card.image);
   })
-  return card;
+  return newCard;
 };
 
-export {cardForm, addCard}
+export { cardForm, addCard, createCard, elementsGrid, imageInput, nameInput }
 
 
