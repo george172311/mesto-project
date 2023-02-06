@@ -45,7 +45,7 @@ cardForm.addEventListener('submit', function (evt) {
     .then(() => {
       closePopup(placePopup)
     })
-.finally(() => showOnLoad(evt, false))
+    .finally(() => showOnLoad(evt, false))
 });
 
 const avatarForm = document.querySelector('#avatar-form');
@@ -53,6 +53,9 @@ avatarForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   showOnLoad(evt, true);
   addAvatarToServ(avatarInput)
+    .then((data) => {
+      profileAvatar.src = data.avatar;
+    })
     .then(() => {
       closePopup(avatarPopup)
     })
