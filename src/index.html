@@ -41,6 +41,17 @@
       </form>
     </div>
   </div>
+  <div class="popup" id="avatar-popup">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button"></button>
+      <h2 class="popup__heading">Обновить аватар</h2>
+      <form name="change-avatar" class="form" id="avatar-form">
+        <input type="url" required name="avatarimage" placeholder="Ссылка на картинку" class="form__input"  id="avatar-image">
+        <p class="form__error"></p>
+        <button type="submit" disabled class="form__button">Сохранить</button>
+      </form>
+    </div>
+  </div>
   <div class="popup" id="image-popup">
     <figure class="popup__element">
       <button type="button" class="popup__close-button"></button>
@@ -54,7 +65,7 @@
     </header>
     <main>
       <section class="profile">
-        <img src="<%=require('./images/Avatar.png')%>" alt="Изображение профиля" class="profile__avatar">
+        <img src="" alt="Изображение профиля" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__author">
             <h1 class="profile__name"></h1>
@@ -78,7 +89,10 @@
       <button type="button" class="element__delete"></button>
       <div class="element__place">
         <h2 class="element__name"></h2>
-        <button type="button" class="element__like"></button>
+        <div class="element__like-container">
+          <button type="button" class="element__like"></button>
+          <p class="element__like-count"></p>
+        </div>
       </div>
     </div>
   </template>

@@ -11,3 +11,12 @@
     margin: 0 0 26px;
   }
 }
+
+.profile__avatar:hover {
+  opacity: 0.8;
+  background-image: url('../../../images/change_avatar.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  
+}

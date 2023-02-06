@@ -1,5 +1,7 @@
 import { openImagePopup } from "./modal.js";
-import { addCardToServ } from "./api.js";
+import { addCardToServ, deleteCard, putLike, deleteLike } from "./api.js";
+import { userId } from "./index.js";
+
 
 
 
@@ -23,22 +25,49 @@ function addCard() {
 };
 
 // функция создания новой карточки
-function createCard(image, name) {
-  const card = elementTemplate.querySelector('.element').cloneNode(true);
-  const cardImage = card.querySelector('.element__image');
-  const like = card.querySelector('.element__like');
-  cardImage.setAttribute('src', image);
-  cardImage.setAttribute('alt', 'Изображение ' + name);
-  card.querySelector('.element__name').textContent = name;
+function createCard(card) {
+  const newCard = elementTemplate.querySelector('.element').cloneNode(true);
+  const cardImage = newCard.querySelector('.element__image');
+  const like = newCard.querySelector('.element__like');
+  const likeCount = newCard.querySelector('.element__like-count');
+  likeCount.textContent = card.likes.length;
+  cardImage.setAttribute('src', card.link);
+  cardImage.setAttribute('alt', 'Изображение ' + card.name);
+  newCard.querySelector('.element__name').textContent = card.name;
+  if (card.owner._id === userId) {
+    newCard.querySelector('.element__delete').classList.add('element__delete_visible');
+    newCard.querySelector('.element__delete').addEventListener('click', function () {
+      deleteCard(card);
+      newCard.remove()
+    })
+  }
+  let likeAuthor = card.likes.find(item => item._id === userId);
+  if (likeAuthor) {
+    like.classList.add('element__like_active');
+  }
   like.addEventListener('click', function () {
-    like.classList.toggle('element__like_active');
+    if (!likeAuthor) {
+      putLike(card._id)
+        .then((data) => {
+          likeCount.textContent = data.likes.length
+        })
+      likeAuthor = true;
+      like.classList.add('element__like_active');
+    } else {
+      deleteLike(card._id)
+        .then((data) => {
+          likeCount.textContent = data.likes.length
+        })
+      likeAuthor = false;
+      like.classList.remove('element__like_active');
+    }
   })
   cardImage.addEventListener('click', function () {
-    openImagePopup(image, name);
+    openImagePopup(card.link, card.image);
   })
-  return card;
+  return newCard;
 };
 
-export {cardForm, addCard, createCard, elementsGrid}
+export { cardForm, addCard, createCard, elementsGrid, imageInput, nameInput }
 
 
