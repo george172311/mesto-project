@@ -45,6 +45,7 @@ cardForm.addEventListener('submit', function (evt) {
     .then(() => {
       closePopup(placePopup)
     })
+    .catch(err => console.log(err))
     .finally(() => showOnLoad(evt, false))
 });
 

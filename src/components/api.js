@@ -48,7 +48,6 @@ export function addProfileInfoToServ(name, about) {
     })
   })
     .then(res => checkRes(res))
-    .catch(err => console.log(err))
 }
 
 // Получаем информацию об авторе
@@ -70,7 +69,6 @@ export function deleteCard(card) {
       name: card.name
     })
   })
-    .catch(err => console.log(err))
 }
 
 // Обновляем аватар
@@ -83,7 +81,6 @@ export function addAvatarToServ(avatar) {
     })
   })
     .then(res => checkRes(res))
-    .catch(err => console.log(err))
 }
 
 // Добавляем.удаляем лайк
