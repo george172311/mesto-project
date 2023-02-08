@@ -87,4 +87,5 @@ Promise.all([getInitialCards(), getInitialName()])
       const newCard = createCard(card);
       elementsGrid.prepend(newCard);
     })
+    .catch(err => console.log(err))
   })

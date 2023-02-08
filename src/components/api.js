@@ -69,6 +69,7 @@ export function deleteCard(card) {
       name: card.name
     })
   })
+  .then(res => checkRes(res))
 }
 
 // Обновляем аватар
